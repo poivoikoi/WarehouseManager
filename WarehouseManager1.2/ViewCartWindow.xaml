@@ -1,0 +1,43 @@
+﻿<Window x:Class="WarehouseManager1._2.ViewCartWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:local="clr-namespace:WarehouseManager1._2"
+        Title="View Cart" Height="450" Width="1000">
+    <Window.Resources>
+        <local:ByteArrayToImageConverter x:Key="ByteArrayToImageConverter"/>
+    </Window.Resources>
+    <Grid>
+        <!-- Your UI elements for displaying the cart items -->
+        <ListView x:Name="cartListView" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,45,0,0">
+            <!-- Define columns and bindings based on your Cart model -->
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="Product ID" DisplayMemberBinding="{Binding Product.ProductID}" Width="80"/>
+                    <GridViewColumn Header="Product Name" DisplayMemberBinding="{Binding Product.ProductName}" Width="200"/>
+                    <GridViewColumn Header="Price" DisplayMemberBinding="{Binding Product.Price}" Width="100"/>
+                    <GridViewColumn Header="Quantity" DisplayMemberBinding="{Binding Quantity}" Width="100"/>
+                    <!-- Add more columns based on your Cart model -->
+
+                    <!-- Assuming Image is a byte[] (binary data) -->
+                    <GridViewColumn Header="Image" Width="100">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <Image Width="80" Height="80" Source="{Binding Product.Image, Converter={StaticResource ByteArrayToImageConverter}}" />
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+
+                    <GridViewColumn Width="100">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <Button Content="Remove" Click="RemoveFromCart_Click" Tag="{Binding CartID}"/>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                </GridView>
+            </ListView.View>
+        </ListView>
+
+        <Button Content="Back to Warehouse" Click="BackToWarehouse_Click" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,0,0,0" Width="132"/>
+    </Grid>
+</Window>
